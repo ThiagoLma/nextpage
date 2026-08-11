@@ -196,43 +196,38 @@
         .dashboard-blob {
             position: absolute;
             border-radius: 50%;
-            filter: blur(130px);
-            opacity: 0.16;
-            animation: blobFloat 22s ease-in-out infinite;
+            filter: blur(120px);
+            opacity: 0.18;
+            will-change: transform;
+            pointer-events: none;
         }
 
         .dashboard-blob-1 {
-            width: 600px;
-            height: 600px;
-            background: var(--accent);
-            top: -260px;
-            right: -140px;
+            width: 640px;
+            height: 640px;
+            background: rgba(168, 85, 247, 0.55);
+            top: -280px;
+            right: -160px;
         }
 
         .dashboard-blob-2 {
-            width: 440px;
-            height: 440px;
-            background: var(--accent-dark);
-            top: 20px;
-            left: -180px;
-            animation-delay: -8s;
+            width: 480px;
+            height: 480px;
+            background: rgba(124, 58, 237, 0.5);
+            bottom: -180px;
+            left: -200px;
         }
 
         .dashboard-grid {
             position: absolute;
             inset: 0;
             background-image:
-                linear-gradient(rgba(168, 85, 247, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(168, 85, 247, 0.02) 1px, transparent 1px);
+                linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
             background-size: 64px 64px;
             mask-image: radial-gradient(ellipse at top, black 10%, transparent 70%);
             -webkit-mask-image: radial-gradient(ellipse at top, black 10%, transparent 70%);
-        }
-
-        @keyframes blobFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(20px, -18px) scale(1.04); }
-            66% { transform: translate(-16px, 14px) scale(0.97); }
+            will-change: transform;
         }
 
         .dashboard .container {
@@ -922,9 +917,9 @@
     <!-- Dashboard -->
     <section class="dashboard">
         <div class="dashboard-bg">
-            <div class="dashboard-blob dashboard-blob-1"></div>
-            <div class="dashboard-blob dashboard-blob-2"></div>
-            <div class="dashboard-grid"></div>
+            <div class="dashboard-blob dashboard-blob-1" data-parallax="0.35"></div>
+            <div class="dashboard-blob dashboard-blob-2" data-parallax="0.2"></div>
+            <div class="dashboard-grid" data-parallax="0.12"></div>
         </div>
         <div class="container">
             <div class="dashboard-header reveal">
@@ -1500,6 +1495,34 @@
         document.querySelectorAll('.reveal').forEach(function(el) {
             revealObserver.observe(el);
         });
+
+        // Parallax suave ao rolar
+        var parallaxEls = document.querySelectorAll('[data-parallax]');
+        var dashboardSection = document.querySelector('.dashboard');
+        var ticking = false;
+
+        function updateParallax() {
+            ticking = false;
+            if (!dashboardSection) return;
+            var rect = dashboardSection.getBoundingClientRect();
+            if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+
+            var scrollOffset = rect.top; // negativo ao rolar para baixo
+
+            parallaxEls.forEach(function(el) {
+                var speed = parseFloat(el.getAttribute('data-parallax')) || 0;
+                el.style.transform = 'translateY(' + (scrollOffset * speed) + 'px)';
+            });
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        updateParallax();
     })();
     </script>
 </body>
