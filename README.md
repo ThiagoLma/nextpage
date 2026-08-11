@@ -1,4 +1,4 @@
-# Fyrn Hub - Gerenciador de Projetos de Landing Pages
+# nextpage - Gerenciador de Projetos de Landing Pages
 
 Centralizador de portfólio para reunir todos os projetos de landing pages em um só lugar. Permite adicionar, editar, excluir, filtrar e buscar projetos, com persistência local.
 
