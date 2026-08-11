@@ -180,17 +180,17 @@
         .dashboard {
             position: relative;
             padding: clamp(2.5rem, 6vw, 4.5rem) 0 0;
-            overflow: hidden;
         }
 
         .dashboard-bg {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 100%;
+            height: 100vh;
             overflow: hidden;
             pointer-events: none;
+            z-index: -1;
         }
 
         .dashboard-blob {
@@ -917,9 +917,9 @@
     <!-- Dashboard -->
     <section class="dashboard">
         <div class="dashboard-bg">
-            <div class="dashboard-blob dashboard-blob-1" data-parallax="0.35"></div>
-            <div class="dashboard-blob dashboard-blob-2" data-parallax="0.2"></div>
-            <div class="dashboard-grid" data-parallax="0.12"></div>
+            <div class="dashboard-blob dashboard-blob-1" data-parallax="0.6" data-parallax-y="-30"></div>
+            <div class="dashboard-blob dashboard-blob-2" data-parallax="0.35" data-parallax-y="20"></div>
+            <div class="dashboard-grid" data-parallax="0.2" data-parallax-y="10"></div>
         </div>
         <div class="container">
             <div class="dashboard-header reveal">
@@ -1498,20 +1498,18 @@
 
         // Parallax suave ao rolar
         var parallaxEls = document.querySelectorAll('[data-parallax]');
-        var dashboardSection = document.querySelector('.dashboard');
         var ticking = false;
 
         function updateParallax() {
             ticking = false;
-            if (!dashboardSection) return;
-            var rect = dashboardSection.getBoundingClientRect();
-            if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-
-            var scrollOffset = rect.top; // negativo ao rolar para baixo
+            // Fundo fixo na viewport: movimento continuo conforme o scroll da pagina
+            var scrolled = window.pageYOffset;
 
             parallaxEls.forEach(function(el) {
                 var speed = parseFloat(el.getAttribute('data-parallax')) || 0;
-                el.style.transform = 'translateY(' + (scrollOffset * speed) + 'px)';
+                var baseY = parseFloat(el.getAttribute('data-parallax-y')) || 0;
+                var translateY = (-scrolled * speed + baseY) % 120;
+                el.style.transform = 'translate3d(0, ' + translateY + 'px, 0)';
             });
         }
 
