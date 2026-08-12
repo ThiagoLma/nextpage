@@ -500,30 +500,31 @@
         .project-status {
             position: absolute;
             top: 12px;
-            left: 14px;
-            display: inline-flex;
+            left: 12px;
+            font-size: 0.64rem;
+            font-weight: 550;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            display: flex;
             align-items: center;
             gap: 0.45rem;
-            font-size: 0.66rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.85);
-            background: none;
-            padding: 0;
         }
 
         .project-status::before {
             content: '';
             width: 6px;
             height: 6px;
-            border-radius: 50%;
+            border-radius: 2px;
             flex-shrink: 0;
         }
 
+        .status-done { color: var(--green); }
         .status-done::before { background: var(--green); }
+        .status-progress { color: var(--amber); }
         .status-progress::before { background: var(--amber); }
+        .status-review { color: var(--blue); }
         .status-review::before { background: var(--blue); }
+        .status-planned { color: var(--accent); }
         .status-planned::before { background: var(--accent); }
 
         .project-body {
