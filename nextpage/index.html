@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nextpage - Gerenciador de Projetos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo"><span class="logo-word">next<span>page</span></span><span class="logo-badge">Hub</span></a>
+        </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <section class="dashboard">
+        <div class="dashboard-bg">
+            <div class="dashboard-grid" data-parallax="0.15" data-parallax-y="10"></div>
+        </div>
+        <div class="container">
+            <div class="dashboard-header reveal">
+                <p class="dashboard-kicker">Portfólio & Projetos</p>
+                <h1 class="dashboard-title">Minhas <span>landing pages</span> em um só lugar</h1>
+                <p class="dashboard-subtitle">Organize, acompanhe o status e acesse cada projeto criado.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="projects">
+        <div class="container">
+            <div class="projects-head reveal">
+                <h2>Projetos</h2>
+                <div class="stats-inline">
+                    <span class="stat-inline"><strong id="statTotal">0</strong>total</span>
+                    <span class="stat-inline done"><strong id="statDone">0</strong>concluídos</span>
+                    <span class="stat-inline progress"><strong id="statProgress">0</strong>em andamento</span>
+                    <span class="stat-inline review"><strong id="statReview">0</strong>em revisão</span>
+                </div>
+            </div>
+
+            <div class="toolbar reveal">
+                <div class="search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="searchInput" placeholder="Buscar projeto por nome ou categoria...">
+                </div>
+                <div class="filter-group">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="done">Concluídos</button>
+                    <button class="filter-btn" data-filter="progress">Em andamento</button>
+                    <button class="filter-btn" data-filter="review">Revisão</button>
+                    <button class="filter-btn" data-filter="planned">Planejados</button>
+                </div>
+            </div>
+
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <a href="#" class="logo"><span class="logo-word">next<span>page</span></span> Hub</a>
+            <div class="footer-links">
+                <a href="https://github.com/ThiagoLma" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://www.linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener">Instagram</a>
+            </div>
+            <p>&copy; <span id="year"></span> nextpage. Gerenciador de portfólio.</p>
+        </div>
+    </footer>
+
+    <!-- Add/Edit Modal -->
+    <div class="modal-overlay" id="projectModal">
+        <div class="modal">
+            <div class="modal-head">
+                <h2 id="modalTitle">Novo Projeto</h2>
+                <button class="modal-close" id="modalClose" aria-label="Fechar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <form id="projectForm">
+                <input type="hidden" id="projectId">
+                <div class="form-group">
+                    <label for="projectName">Nome do projeto *</label>
+                    <input type="text" id="projectName" placeholder="Ex: Landing Page Restaurante" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectUrl">URL / Link *</label>
+                    <input type="url" id="projectUrl" placeholder="https://seuprojeto.com.br" required>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="projectCategory">Categoria</label>
+                        <select id="projectCategory">
+                            <option value="Landing Page">Landing Page</option>
+                            <option value="Site Institucional">Site Institucional</option>
+                            <option value="E-commerce">E-commerce</option>
+                            <option value="Portfólio">Portfólio</option>
+                            <option value="Sistema Web">Sistema Web</option>
+                            <option value="UI/UX">UI/UX</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="projectStatus">Status</label>
+                        <select id="projectStatus">
+                            <option value="planned">Planejado</option>
+                            <option value="progress">Em andamento</option>
+                            <option value="review">Em revisão</option>
+                            <option value="done">Concluído</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group full">
+                    <label for="projectTech">Tecnologias (separadas por vírgula)</label>
+                    <input type="text" id="projectTech" placeholder="HTML, CSS, JavaScript, React">
+                </div>
+                <div class="form-group full">
+                    <label for="projectDesc">Descrição</label>
+                    <textarea id="projectDesc" placeholder="Breve descrição do projeto..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" id="modalCancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="modalSave">Salvar Projeto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    
+    <script src="js/script.js" defer></script>
+</body>
+</html>
